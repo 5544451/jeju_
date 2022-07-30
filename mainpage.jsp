@@ -1,5 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.lowCO2.web.position" %>
+<%@ page import= "java.sql.Connection"%>
+<%@ page import= "java.sql.DriverManager"%>
+<%@ page import= "java.sql.PreparedStatement"%>
+<%@ page import= "java.sql.ResultSet"%>
+<%@ page import= "java.sql.SQLException"%>
+<%@ page import= "java.util.ArrayList"%>
+<%@ page import= "java.util.List"%>
+
+<%
+	request.setCharacterEncoding("UTF-8");
+	response.setCharacterEncoding("utf8");
+
+	String kakao = request.getParameter("kakao");
+	session.setAttribute("kakao", kakao);
+%>  
+
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -44,9 +63,6 @@
   <!--Spoca Han Sans Neo-->
   <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
   
-  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
 
 </head>
 <body>
@@ -55,82 +71,12 @@
       <div class="head-container">
         <div class="head-brand"><a href="/mainpage.jsp">저탄소 제주 여행</a></div>
         <div class="head-blog">
-        	<ul>
-                <li style="display: inline-block;"><a href="signup.jsp" id="buttons"><p>회원가입</p></a></li> &nbsp &nbsp &nbsp
-                <li style="display: inline-block;"><a href="#login" id="buttons"><p>로그인</p></a></li>   
-            </ul>  
+        	<!-- 로그인, 회원가입 부분 따로 추가하는 부분 -->
+			<jsp:include page="account.jsp" flush="false" />
         </div>
       </div>
     </div>
   </header>
-  <!-- 요기부터 로그인 팝업창 -->
-  <div id="login" class="overlay">
-      <div class="popup"> <div class="title"> <p> 로그인 </p> </div>
-      <fieldset>
-           <form action="log" method="post">
-                <ul>
-                    <li>
-                        <label for="user-id"> 아이디 </label>
-                        <input type="text" name="user-id" autofocus placeholder="아이디 입력" required/>
-                    </li>
-                    <li>
-                        <label for="user-pwd"> 비밀번호 </label>
-                        <input type="password" name="user-pwd" placeholder="비밀번호 입력" required/>
-                    </li>
-                </ul>  
-                <br>
-                <div id="buttons">
-                    <input type="submit" value="로그인"/>
-                    <a href="#none" class="close">&times;</a>
-                </div>
-             </form>
-             <div style="font-size: 15px; text-align : center;"><p>아이디가 없으신가요? <a href="signup.jsp">&nbsp 회원가입</a></p></div> 
-                <br><p style="font-size : 13px"> SNS 계정으로 로그인</p><hr>
-                <ul style="text-align: center;" class="sns">  
-              		<li onlick="kakaoLogin()" style="display: inline-block;"><!-- 카카오 -->
-	               		<a href="javascript:loginWithKakao()">
-	                   	<img src="/img/kakao_login_large.png" alt="카카오 로그인 버튼"/></a>
-	                	<!-- 카카오 로그인 -->
-						<script type="text/javascript">
-							Kakao.init('aaf6aeb8548101614cfb4d94eec89d1e'); //발급받은 키 중 javascript키를 사용해준다.
-							console.log(Kakao.isInitialized()); // sdk초기화여부판단
-							//카카오로그인
-							function loginWithKakao() {
-							    Kakao.Auth.login({
-							      success: function (response) {
-							        Kakao.API.request({
-							        	url: '/v2/user/me',
-							        	success: function (response) {
-		         							var kakaonickname = response.properties.nickname;    //카카오톡 닉네임을 변수에 저장 (닉네임 값을 다른페이지로 넘겨 출력하기 위해서)
-		         							window.location.replace("http://" + window.location.hostname + ( (location.port==""||location.port==undefined)?"":":" + location.port) + "/home.jsp?kakaonickname="+kakaonickname);},
-							            fail: function (error) {console.log(error)},
-							        });},
-							      fail: function (error) { console.log(error) },
-							    })}
-					</script></li>
-			    	<li style="display: inline-block;"><!-- 네이버 -->
-						<div id="naver_id_login"></div>		
-						<script type="text/javascript">
-						  	var naver_id_login = new naver_id_login("4PtXLl4qAKOf3JMWWdNt", "http://localhost:8080/mainpage.jsp");
-						  	var state = naver_id_login.getUniqState();
-						  	naver_id_login.setButton("green", 2,20);
-						  	naver_id_login.setDomain("http://localhost:8080/mainpage.jsp");
-						  	naver_id_login.setState(state);
-						  	naver_id_login.setPopup();
-						  	naver_id_login.init_naver_id_login();
-							// 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
-							function naverSignInCallback() {
-								// naver_id_login.getProfileData('프로필항목명');
-								// 프로필 항목은 개발가이드를 참고하시기 바랍니다.
-								alert(naver_id_login.getProfileData('email'));
-								alert(naver_id_login.getProfileData('nickname'));
-							}
-							// 네이버 사용자 프로필 조회
-							naver_id_login.get_naver_userprofile("naverSignInCallback()");
-					   </script></li>        
-				 </ul>
-            </fieldset>
-        </div></div> 
   <!--한 라인씩 내용을 넣을 예정-->
   <section class="main">
     <div class="main-container">
@@ -146,71 +92,111 @@
       </div>
     </div>
   </section>
-
-  <section>
-    <div class="inner">
-      <div class="skill-container">
-        <a href="https://naver.com"></a>
-        <div class="skill"><a href="signup.jsp">
-          <i class="fa-solid fa-bed skill-icon bed-style"></i>
-          <div class="skill-title">
-            <div class="skill-name">숙박 업소</div></a>
-          </div>
-        </div>
-        <div class="skill">
-          <i class="fa-solid fa-seedling skill-icon seedling-style"></i>
-          <div class="skill-title">
-            <div class="skill-name">채식 식당</div>
-          </div>
-        </div>
-        <div class="skill">
-          <i class="fa-solid fa-lemon skill-icon cafe-style"></i>
-          <div class="skill-title">
-            <div class="skill-name">채식 카페</div>
-          </div>
-        </div>
-        <div class="skill">
-          <i class="fa-solid fa-charging-station skill-icon charging-style"></i>
-          <div class="skill-title">
-            <div class="skill-name">전기차 충전소</div>
-          </div>
-        </div>
-        <div class="skill">
-          <i class="fa-solid fa-bicycle skill-icon bicycle-style"></i>
-          <div class="skill-title">
-            <div class="skill-name">자전거 대여소</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<section>
+	<div class="inner">
+		<div class="skill-container">
+		
+			<div class="skill"><a href="http://localhost:8080/mainpage.jsp?table=lodgment">
+				<i class="fa-solid fa-bed skill-icon bed-style"></i>
+				<div class="skill-title">
+					<div class="skill-name">숙박 업소</div>
+				</div>
+			</div>
+			
+			<div class="skill"><a href="http://localhost:8080/mainpage.jsp?table=vegan_restaurant">
+				<i class="fa-solid fa-seedling skill-icon seedling-style"></i>
+				<div class="skill-title">
+					<div class="skill-name">채식 식당</div></a>
+				</div>
+			</div>
+			
+			<div class="skill"><a href="http://localhost:8080/mainpage.jsp?table=vegan">
+				<i class="fa-solid fa-lemon skill-icon cafe-style"></i>
+				<div class="skill-title">
+					<div class="skill-name">채식 카페</div></a>
+				</div>
+			</div>
+			
+			<div class="skill"><a href="http://localhost:8080/mainpage.jsp?table=charge">
+				<i class="fa-solid fa-charging-station skill-icon charging-style"></i>
+				<div class="skill-title">
+					<div class="skill-name">전기차 충전소</div></a>
+				</div>
+			</div>
+			
+			<div class="skill"><a href="http://localhost:8080/mainpage.jsp?table=bike">
+				<i class="fa-solid fa-bicycle skill-icon bicycle-style"></i>
+				<div class="skill-title">
+					<div class="skill-name">자전거 대여소</div></a>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</section>
 
   <section>
     <div class="inner">
       <div class="section-container">
         <div class="roadmap-container">
-          <div class="roadmap-title">추천 여행지</div>
+          <div class="roadmap-title">추천 목적지</div>
           <div class="arrow-container">
             <i class="fa-solid fa-angle-left arrow-prev"></i>
             <i class="fa-solid fa-angle-right arrow-next"></i>
           </div>
         </div>
-        <ul class="class-list">
-          <li class="class-card">
-            <img src="/img/성산일출봉.webp" alt="성산일출봉" style="width: 100%;">
-            <div class="class-container">
-              <div class="class-maintitle">성산일출봉</div>
-              <div class="class-subtitle">제주도 서귀포시에 있는 봉입니다.</div>
-            </div>
-          </li>
-          <li class="class-card">
-            <img src="/img/산방산.jpg" alt="산방산" style="width: 100%;">
-            <div class="class-container">
-              <div class="class-maintitle">산방산</div>
-              <div class="class-subtitle">제주도 서귀포시에 있는 산입니다.</div>
-            </div>
-          </li>
-
+        <ul class="class-list" style = "overflow-x: scroll; overflow-x: auto;">
+        <!-- 데베 반복호출 -->        
+<%	 		//테이블값 받아옴
+			String table =  request.getParameter("table");
+			session.setAttribute("table", table);
+			
+			if( table != null) {table = request.getParameter("table");}
+			else {table = "tourist_destination";}
+			
+			//sql연결
+			Connection conn = null;
+			try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/jeju?serverTimezone=UTC", "root", "");
+	            System.out.println("success");
+	        } 
+	        catch (Exception e) {
+	            System.out.println("fail : " + e);
+	            try {
+	                conn.close();
+	            } 
+	            catch (SQLException e1) {   
+	            	System.out.println(" SQLException fail : " + e1);
+	            }
+	        }
+			
+			String sql = String.format("select * from %s", table);
+	        PreparedStatement pstmt = null;
+	        List<position> info = new ArrayList<position>();
+	        
+	        try {
+	            pstmt = conn.prepareStatement(sql);
+	            ResultSet rs = pstmt.executeQuery();
+	           	//카드 데이터 수만큼 생산
+	            while (rs.next()) { %>
+	            	
+		           	<li class="class-card">
+		 		      <div class="class-container">
+		 		        <div class="class-maintitle"><%= rs.getString("제목")%></div>
+		 		        <div class="class-subtitle" style ="word-break:break-all;"><%= rs.getString("지번주소")%></div>
+		 		      </div></li>   	
+<% 	            }
+	            pstmt.close(); 
+	        } catch (Exception e) {
+	            System.out.println("select method error : " + e);
+	        }    finally {
+	            try {
+	                if(pstmt!=null && !pstmt.isClosed()) {
+	                    pstmt.close();
+	                }
+	            } catch (Exception e2) {}
+	        } %>
         </ul>
       </div>
     </div>
