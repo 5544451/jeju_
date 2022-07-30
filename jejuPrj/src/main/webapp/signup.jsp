@@ -55,7 +55,7 @@
             </fieldset>
         <div id="buttons">
             <input type="submit" value="회원가입"/>
-            <a href="index.jsp"><input type="button" value="돌아가기"> </a>
+            <a href="mainpage.jsp"><input type="button" value="돌아가기"> </a>
         </div>
         </form>
     </div>
