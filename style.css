@@ -33,68 +33,74 @@ a:hover {
 }
 
 .inner {
-  /*높이와 너비를 100프로로 해야 전체 블럭에 표시됨*/
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0rem 1.5rem;
+  overflow: hidden;
 }
 
 header {
   width: 100%;
   height: 60px;
-  background-color: #fff;
   position: fixed;
-  /*왼쪽 최상단 이라는 뜻*/
+  background-color: #fff;
   top: 0;
   left: 0;
-  /*전면부에 보여줌*/
   z-index: 1000;
 }
 
 .head-container {
-  /*높이와 너비를 100프로로 해야 전체 블럭에 표시*/
   width: 100%;
   height: 100%;
-  /*수평정렬*/
   display: flex;
-  /*수평 정렬 방법을 설정함. 양쪽 끝에 정렬*/
   justify-content: space-between;
-  /*교차축 각 행을 어떻게 정렬할지 설정. 높이의 가운데에 정렬됨.*/
   align-items: center;
 }
 
 .head-container .head-brand {
-  font-weight: bold;
   font-size: 1.2rem;
 }
 
 .head-container .head-brand a:hover {
+  cursor: pointer;
+}
+
+.head-container .account-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.account-login {
+  width: 100%;
+  height: 100%;
+}
+
+.account-join {
+  width: 100%;
+}
+
+.head-container .head-account .account-login a:hover {
   color: #2186c4;
   cursor: pointer;
 }
 
-.head-container .head-blog {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-.head-container .head-blog a:hover {
+.head-container .head-account .account-join a:hover {
   color: #2186c4;
   cursor: pointer;
 }
 
-/*이미지가 들어간 영역*/
 .main {
-  height: 360px;
-  background-image: url("/img/jeju1.webp");
+  height: 200px;
+  background-image: url(/img/jeju1.webp);
   background-size: cover;
-  background-position: center 10%;
+  background-position: center 30%;
   background-repeat: no-repeat;
   z-index: 1;
 }
 
-/*이미지 위에 올라갈 부분*/
 .main-container {
   width: 100%;
   height: 100%;
@@ -105,8 +111,7 @@ header {
 }
 
 .title-container {
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding: 40px 50px 50px 50px;
 }
 
 .title {
@@ -123,172 +128,139 @@ header {
   line-height: 2rem;
 }
 
-.skill-container {
+section {
+  width: 100%;
+  background-color: #fff;
+  position: relative;
+}
+
+.center-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.recommend-container {
+  width: 300px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.search-bar {
+  width: 100%;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+input[type=text] {
+  width: 250px;
+  height: 30px;
+  border: 0.1px solid #3f464d;
+  border-radius: 15px;
+  outline: none;
+  padding-left: 10px;
+  padding-right: 35px;
+  font-size: 0.8rem;
+}
+
+.search-button {
+  font-weight : 900;
+  font-family: "Font Awesome 5 Free";
+  background-color : transparent;
+  border : none;
+  cursor : pointer;
+  position : absolute;
+  right : 5px;
+  top : 50%;
+  transform : translatey(-50%);
+}
+
+.search-button::before
+ {
+  content: "\f002";
+ }
+
+form {
+  position: relative;
+}
+
+.map-container {
+  width: 60%;
+  height: 100%;
+  margin-top: 16px;
+}
+
+.destination-container {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top: 0.8rem;
+  margin: 0.8rem 0 0.6rem 0;
 }
 
-.skill {
-  width: 20%;
-  background-color: #fff;
+.list-container {
+  width: 300px;
+  height: 100%;
+  margin-top: 20px;
+}
+
+.list-title {
   display: flex;
-  align-items: center;
-  border-radius: 9px;
-  padding: 0.5rem 1rem;
-  margin: 0 1rem;
-  box-shadow: 10px 10px 10px -5px rgba(25, 42, 70, 0.2);
+  justify-content:center ;
 }
 
-.skill:hover {
-  box-shadow: -20px 20px 28px -10px rgba(25, 42, 70, 0.13);
-  cursor: pointer;
-}
-
-.skill-icon {
-  font-size: 2rem;
-  margin: 10px;
-}
-
-.bed-style {
-  color: #2186c4;
-}
-
-.seedling-style {
-  color: #85A349;
-}
-
-.cafe-style {
-  color: #F2CB05;
-}
-
-.charging-style {
-  color: #04D94F;
-}
-
-.bicycle-style {
-  color: #F27B13;
-}
-
-.skill-title {
+.place-list {
   display: flex;
   flex-direction: column;
-  align-content: center;
-}
-
-.skill-name {
-  font-weight: bold;
-  color: #545e6f;
-  margin: 0.3rem;
-}
-
-.section-container {
-  width: 100%;
-  margin-top: 2rem;
-}
-
-.roadmap-container {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-}
-
-.roadmap-title {
-  font-weight: bold;
-  font-size: 1.3rem;
-}
-
-.arrow-container {
-  display: flex;
-}
-
-.arrow-prev {
-  font-size: 2rem;
-  color: #545e6f;
-  margin: 0.3rem;
-  cursor: pointer;
-}
-
-.arrow-next {
-  font-size: 2rem;
-  color: #2186c4;
-  margin: 0.3rem;
-  cursor: pointer;
-}
-
-.class-list {
-  display: flex;
   list-style: none;
   padding: 0;
-  margin-top: 0;
-  overflow: none;
+  overflow: hidden;
 }
 
-.class-card {
+.place-card {
   width: 240px;
-  min-width: 240px;
-  margin: 10px;
-  box-shadow: 10px 10px 10px -5px rgba(25, 42, 70, 0.2);
-
-  transition: 0.3s;
+  height: 80px;
+  margin: 8px;
+  padding: 1px;
+  border-color: #3f464d;
+  border-width: 1px;
   border-radius: 8px;
-  touch-action: pan-x;
+  box-shadow: 10px 10px 10px -5px rgba(25, 42, 70, 0.2);
 }
 
-.class-container {
+.place-container {
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.class-card:hover {
-  box-shadow: -20px 20px 28px -10px rgba(25, 42, 70, 0.13);
-  cursor: pointer;
-}
-
-.class-maintitle {
+.place-title {
   font-weight: bold;
   font-size: 1rem;
+  color: #545e6f;
   padding: 0.8rem;
-  color: #545e6f;
 }
 
-.class-subtitle {
-  font-weight: normal;
+.place-desc {
   font-size: 0.8rem;
-  padding: 0 1rem 1rem 1rem;
-  color: #545e6f;
-}
-
-img {
-  border-radius: 8px 8px 0 0;
-  width: 100%;
-  height: 150px;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-
-
-section {
-  width: 100%;
-  background-color: #fff;
-  /*보통 섹션 안에 다른 요소를 위치시킴.
-  이 요소를 섹션에 맞추려면 섹션을 렐러티브로 하고,
-  요소를 앱솔루트로 해서 렐러티브에 맞추도록 해야함.*/
-  position: relative;
-}
-
-@media only screen and (min-width: 1200px) {
-  .inner {
-    max-width: 1200px;
-  }
+  padding: 0.3rem 0.8rem 0.8rem 0.8rem;
 }
 
 @media only screen and (max-width: 980px) {
-  .skill-container {
+  .list-container {
+    display: none;
+  }
+  .recommend-container {
     display: none;
   }
 }
